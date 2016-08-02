@@ -114,7 +114,6 @@ export default class Swiper extends Component {
 
   componentDidMount() {
     this._initSwiper()
-    this._initSlideKeys()
   }
 
   componentWillUnmount() {
