@@ -169,6 +169,33 @@ describe('<Swiper/>', function() {
     props: { scrollBar: true },
     nextProps: { scrollBar: false },
   })
+
+  it('syncs <Slide/> children with swiper instance', () => {
+    class Container extends React.Component {
+      state = { items: [1, 2, 3] }
+
+      swiper() {
+        return this.swiperComponent.swiper()
+      }
+
+      render() {
+        return (
+          <Swiper ref={node => this.swiperComponent = node}>
+            {this.state.items.map(item => <Slide key={item} />)}
+          </Swiper>
+        )
+      }
+    }
+
+    const wrapper = mount(<Container/>)
+    expect(wrapper.instance().swiper().slides).to.have.length(3)
+
+    wrapper.setState({
+      items: [1, 2, 3, 4, 5, 6]
+    })
+
+    expect(wrapper.instance().swiper().slides).to.have.length(6)
+  })
 })
 
 function itReInitializes(options = {}) {
@@ -179,12 +206,18 @@ function itReInitializes(options = {}) {
     after: () => {},
   }, options)
 
-  it(`re-initializes swiper when ${options.propName} changes`, () => {
+  it(`re-initializes swiper when ${options.propName} changes`, defer(10, () => {
     const onInit = sinon.spy()
     const wrapper = mount(<Swiper {...options.props} onInit={onInit}/>)
     options.before(wrapper)
     wrapper.setProps(options.nextProps)
     expect(onInit.callCount).to.equal(2)
     options.after(wrapper)
-  })
+  }))
+}
+
+function defer(time, fn) {
+  return function() {
+    setTimeout(fn, time)
+  }
 }
