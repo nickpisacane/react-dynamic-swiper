@@ -12,6 +12,7 @@ const BoolOrElementType = PropTypes.oneOfType([
 
 export default class Swiper extends Component {
   static propTypes = {
+    wrapperClassName: PropTypes.string,
     swiperOptions: PropTypes.object,
     navigation: PropTypes.bool,
     prevButton: PropTypes.element,

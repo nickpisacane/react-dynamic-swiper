@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import { expect } from 'chai'
-import spy from 'spy'
 import sinon from 'sinon'
 
 import { Swiper, Slide } from '../../src'
@@ -19,6 +18,12 @@ describe('<Swiper/>', function() {
     expect($swiperWrapper).to.have.length(1)
     expect($swiperWrapper.parent().hasClass('swiper-container'))
       .to.equal(true)
+  })
+
+  it('renders wrapper with class "swiper-wrapper" and wrapperClassName', () => {
+    const wrapper = shallow(<Swiper wrapperClassName="foo"/>)
+    const $swiperWrapper = wrapper.find('div.swiper-wrapper')
+    expect($swiperWrapper.hasClass('foo')).to.equal(true)
   })
 
   it('only renders <Slide/> children in wrapper', () => {
@@ -136,7 +141,7 @@ describe('<Swiper/>', function() {
   itReInitializes({
     propName: 'navigation',
     props: { navigation: false },
-    nextProps: { navigation: true }
+    nextProps: { navigation: true },
   })
 
   itReInitializes({
