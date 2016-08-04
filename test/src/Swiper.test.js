@@ -110,20 +110,19 @@ describe('<Swiper/>', function() {
     expect(wrapper.instance().swiper().params.slidesPerView).to.equal(42)
   })
 
-  it('calls `onInit` on mount, and re-initialization', () => {
-    const onInit = sinon.spy()
-    const wrapper = mount(<Swiper onInit={onInit}/>)
-    expect(onInit.called).to.equal(true)
-    expect(onInit.calledWith(wrapper.instance().swiper())).to.equal(true)
+  it('calls `onInitSwiper` on mount, and re-initialization', () => {
+    const onInitSwiper = sinon.spy()
+    const wrapper = mount(<Swiper onInitSwiper={onInitSwiper}/>)
+    expect(onInitSwiper.called).to.equal(true)
+    expect(onInitSwiper.calledWith(wrapper.instance().swiper())).to.equal(true)
 
     wrapper.setProps({
       swiperOptions: {
         slidesPerView: 'auto'
-      },
-      onInit,
+      }
     })
 
-    expect(onInit.callCount).to.equal(2)
+    expect(onInitSwiper.callCount).to.equal(2)
   })
 
   itReInitializes({
@@ -206,18 +205,12 @@ function itReInitializes(options = {}) {
     after: () => {},
   }, options)
 
-  it(`re-initializes swiper when ${options.propName} changes`, defer(10, () => {
-    const onInit = sinon.spy()
-    const wrapper = mount(<Swiper {...options.props} onInit={onInit}/>)
+  it(`re-initializes swiper when ${options.propName} changes`, () => {
+    const onInitSwiper = sinon.spy()
+    const wrapper = mount(<Swiper {...options.props} onInitSwiper={onInitSwiper}/>)
     options.before(wrapper)
     wrapper.setProps(options.nextProps)
-    expect(onInit.callCount).to.equal(2)
+    expect(onInitSwiper.callCount).to.equal(2)
     options.after(wrapper)
-  }))
-}
-
-function defer(time, fn) {
-  return function() {
-    setTimeout(fn, time)
-  }
+  })
 }

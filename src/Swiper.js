@@ -19,7 +19,7 @@ export default class Swiper extends Component {
     nextButton: PropTypes.element,
     pagination: BoolOrElementType,
     scrollBar: BoolOrElementType,
-    onInit: PropTypes.func,
+    onInitSwiper: PropTypes.func,
   }
 
   static defaultProps = {
@@ -27,7 +27,7 @@ export default class Swiper extends Component {
     navigation: true,
     pagination: true,
     scrollBar: false,
-    onInit: () => {},
+    onInitSwiper: () => {},
   }
 
   _swiper = null
@@ -44,7 +44,7 @@ export default class Swiper extends Component {
    */
   _initSwiper() {
     const {
-      swiperOptions, navigation, pagination, scrollBar, onInit,
+      swiperOptions, navigation, pagination, scrollBar, onInitSwiper,
     } = this.props
     const opts = {}
 
@@ -66,7 +66,7 @@ export default class Swiper extends Component {
           activeSlide.props.onActive(this._swiper)
       }
     })
-    onInit(this._swiper)
+    onInitSwiper(this._swiper)
   }
 
   /**
