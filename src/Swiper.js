@@ -1,6 +1,5 @@
 import React, { Component, PropTypes, Children } from 'react'
 import deepEqual from 'deep-equal'
-import invariant from 'invariant'
 import cx from 'classnames'
 
 import SwiperLib from './SwiperLib'
@@ -36,8 +35,7 @@ export default class Swiper extends Component {
   _pagination = null
   _scrollBar = null
   _container = null
-  _slides = []
-  _slideKeys = []
+  _slidesCount = 0
 
   /**
    * Initialize Swiper instance.
@@ -45,7 +43,7 @@ export default class Swiper extends Component {
    */
   _initSwiper() {
     const {
-      swiperOptions, navigation, pagination, scrollBar, onInit
+      swiperOptions, navigation, pagination, scrollBar, onInit,
     } = this.props
     const opts = {}
 
@@ -64,12 +62,13 @@ export default class Swiper extends Component {
   }
 
   /**
-   * Filter non-Slide children.
+   * Filter out non-Slide children.
    * @private
+   * @param {?Array<Element>} Children Child elements, if omitted uses own children.
    * @return {Array}
    */
-  _getSlideChildren() {
-    const { children } = this.props
+  _getSlideChildren(children) {
+    children = children || this.props.children
     return Children.toArray(children)
       .filter(child => child.type === Slide)
   }
@@ -91,17 +90,19 @@ export default class Swiper extends Component {
   }
 
   /**
-   * Renders `Slide` children, and populates `_slides` with refs.
+   * Determines whether `swiper` should be re-initialized, or not, based on
+   * `prevProps`.
    * @private
-   * @return {Array<Element>}
+   * @param  {Object} prevProps Previous props.
+   * @return {Boolean}
    */
-  _renderSlideChildren() {
-    this._slides = []
-    return this._getSlideChildren().map((slide, i) => (
-      React.cloneElement(slide, {
-        ref: node => this._slides[i] = node
-      })
-    ))
+  _shouldReInitialize(prevProps) {
+    return !deepEqual(prevProps.swiperOptions, this.props.swiperOptions) ||
+      prevProps.navigation !== this.props.navigation ||
+      prevProps.nextButton !== this.props.nextButton ||
+      prevProps.prevButton !== this.props.prevButton ||
+      prevProps.pagintion !== this.props.pagination ||
+      prevProps.scrollBar !== this.props.scrollbar
   }
 
   /**
@@ -114,21 +115,33 @@ export default class Swiper extends Component {
 
   componentDidMount() {
     this._initSwiper()
+    this._slidesCount = this._getSlideChildren().length
   }
 
   componentWillUnmount() {
     this._swiper.destroy()
   }
 
-  // TODO
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
+    const shouldReInitialize = this._shouldReInitialize(prevProps)
+    const nextSlidesCount = this._getSlideChildren().length
 
+    if (shouldReInitialize) {
+      this._slidesCount = nextSlidesCount
+      this._swiper.destroy(true, true)
+      return this._initSwiper()
+    }
+
+    if (nextSlidesCount !== this._slidesCount) {
+      this.swiper().update()
+      this._slidesCount = nextSlidesCount
+    }
   }
 
   render() {
     const {
       className, wrapperClassName, pagination, navigation, prevButton,
-      nextButton, scrollbar,
+      nextButton, scrollBar,
     } = this.props
 
     return (
@@ -137,7 +150,7 @@ export default class Swiper extends Component {
         ref={node => this._container = node}
       >
         <div className={cx('swiper-wrapper', wrapperClassName)}>
-          {this._renderSlideChildren()}
+          {this._getSlideChildren()}
         </div>
 
         {this._renderOptional(
@@ -155,7 +168,7 @@ export default class Swiper extends Component {
         )}
 
         {this._renderOptional(
-          naviation,
+          navigation,
           'swiper-button-next',
           node => this._nextButton = node,
           nextButton,
@@ -165,7 +178,7 @@ export default class Swiper extends Component {
           scrollBar,
           'swiper-scrollbar',
           node => this._scrollBar = node,
-          typeof scrollbar === 'boolean' ? false : scrollBar,
+          typeof scrollBar === 'boolean' ? false : scrollBar,
         )}
       </div>
     )
