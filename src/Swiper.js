@@ -59,6 +59,13 @@ export default class Swiper extends Component {
       this._container,
       Object.assign(opts, swiperOptions)
     )
+
+    this._swiper.on('slideChangeEnd', () => {
+      const activeSlide = this._getSlideChildren()[this._swiper.activeIndex]
+      if (activeSlide && activeSlide.props.onActive) {
+          activeSlide.props.onActive(this._swiper)
+      }
+    })
     onInit(this._swiper)
   }
 
