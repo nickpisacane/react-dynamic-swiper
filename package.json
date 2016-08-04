@@ -20,6 +20,7 @@
     "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
     "react": "^15.3.0",
+    "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
     "sinon": "^1.17.5"
   },
