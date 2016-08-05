@@ -1,4 +1,5 @@
 # react-dynamic-swiper
+[![Travis][travis-image]][travis-url]
 
 React wrapper for [iDangerous-Swiper](idangerous-swiper) that auto-magically
 reinitializes and updates slides for you.
@@ -33,6 +34,7 @@ function MySwiper() {
 // and will still work.
 import React, { Component } from 'react'
 import { Swiper, Slide } from 'react-dynamic-swiper'
+import 'react-dynamic-swiper/styles.css'
 
 class MySwiper extends Component {
   constructor(props, context) {
@@ -90,3 +92,5 @@ class MySwiper extends Component {
 * onActive (Function) Invoked with swiper instance when `Slide` is active. Not invoked on initialization.
 
 [idangerous-swiper]: http://idangero.us/swiper
+[travis-image]: https://travis-ci.org/nickpisacane/react-dynamic-swiper.svg?branch=master
+[travis-url]: https://travis-ci.org/nickpisacane/react-dynamic-swiper
