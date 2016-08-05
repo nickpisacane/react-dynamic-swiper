@@ -4,6 +4,7 @@ import cx from 'classnames'
 
 import SwiperLib from './SwiperLib'
 import Slide from './Slide'
+import { events, EventPropTypes } from './swiperEvents'
 
 const BoolOrElementType = PropTypes.oneOfType([
   PropTypes.bool,
@@ -11,7 +12,7 @@ const BoolOrElementType = PropTypes.oneOfType([
 ])
 
 export default class Swiper extends Component {
-  static propTypes = {
+  static propTypes = Object.assign({
     wrapperClassName: PropTypes.string,
     swiperOptions: PropTypes.object,
     navigation: PropTypes.bool,
@@ -20,7 +21,7 @@ export default class Swiper extends Component {
     pagination: BoolOrElementType,
     scrollBar: BoolOrElementType,
     onInitSwiper: PropTypes.func,
-  }
+  }, EventPropTypes)
 
   static defaultProps = {
     swiperOptions: {},
@@ -60,13 +61,29 @@ export default class Swiper extends Component {
       Object.assign(opts, swiperOptions)
     )
 
-    this._swiper.on('slideChangeEnd', () => {
+    this._swiper.on('onSlideChangeEnd', () => {
       const activeSlide = this._getSlideChildren()[this._swiper.activeIndex]
       if (activeSlide && activeSlide.props.onActive) {
           activeSlide.props.onActive(this._swiper)
       }
     })
+
+    this._delegateSwiperEvents()
     onInitSwiper(this._swiper)
+  }
+
+  /**
+   * Delegates all swiper events to event handlers passed in props.
+   * @private
+   */
+  _delegateSwiperEvents() {
+    events.forEach(event => {
+      this._swiper.on(event, function() {
+        if (this.props[event] && typeof this.props[event] === 'function') {
+          this.props[event].apply(null, arguments)
+        }
+      }.bind(this))
+    })
   }
 
   /**
