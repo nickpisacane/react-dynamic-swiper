@@ -4,6 +4,7 @@ import { expect } from 'chai'
 import sinon from 'sinon'
 
 import { Swiper, Slide } from '../../src'
+import { events } from '../../src/swiperEvents'
 
 describe('<Swiper/>', function() {
   it('renders <div/> with class "swiper-container"', () => {
@@ -194,6 +195,33 @@ describe('<Swiper/>', function() {
     })
 
     expect(wrapper.instance().swiper().slides).to.have.length(6)
+  })
+
+  it('invokes <Slide/> childrens onActive if provided', () => {
+    const spy = sinon.spy()
+    const wrapper = mount(
+      <Swiper>
+        <Slide onActive={spy} />
+      </Swiper>
+    )
+
+    wrapper.instance().swiper().emit('onSlideChangeEnd')
+    expect(spy.called).to.equal(true)
+  })
+
+  it('invokes swiper event handlers passed in props', () => {
+    const handlers = events.reduce((obj, event) => {
+      obj[event] = sinon.spy()
+      return obj
+    }, {})
+
+    const wrapper = mount(<Swiper {...handlers}/>)
+    const swiper = wrapper.instance().swiper()
+    events.forEach(event => swiper.emit(event))
+
+    events.forEach(event => {
+      expect(handlers[event].called).to.equal(true)
+    })
   })
 })
 
