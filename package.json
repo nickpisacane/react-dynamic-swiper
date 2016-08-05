@@ -1,14 +1,23 @@
 {
   "name": "react-dynamic-swiper",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "React wrapper for IDangerous Swiper that auto-magically updates slides, and reinitializes.",
+  "main": "lib",
   "scripts": {
     "test": "./node_modules/.bin/_mocha test/.setup.js test/**/*.test.js",
-    "build": "./node_modules/.bin/babel src --out-dir lib"
+    "build-lib": "./node_modules/.bin/babel src --out-dir lib && cp src/styles.css lib",
+    "prepublish": "npm run build-lib"
   },
-  "keywords": [],
+  "keywords": [
+    "swiper",
+    "react swiper",
+    "idangerous swiper"
+  ],
   "author": "Nick Pisacane <pisacanen@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickpisacane/react-dynamic-swiper"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -21,9 +30,7 @@
     "chai": "^3.5.0",
     "enzyme": "^2.4.1",
     "jsdom": "^9.4.1",
-    "karma-sourcemap-loader": "^0.3.7",
     "mocha": "^2.5.3",
-    "phantomjs-prebuilt": "^2.1.10",
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
@@ -32,7 +39,6 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "deep-equal": "^1.0.1",
-    "lodash.omit": "^4.4.1",
     "swiper": "^3.3.1"
   }
 }
