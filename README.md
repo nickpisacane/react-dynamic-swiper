@@ -1,7 +1,7 @@
 # react-dynamic-swiper
 [![Travis][travis-image]][travis-url]
 
-React wrapper for [iDangerous-Swiper](idangerous-swiper) that auto-magically
+React wrapper for [iDangerous-Swiper][idangerous-swiper] that auto-magically
 reinitializes and updates slides for you.
 
 # Installation
