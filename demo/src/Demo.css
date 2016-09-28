@@ -1,0 +1,53 @@
+.Demo-swiper {
+  width: 1200px;
+  height: 300px;
+  margin: 20px auto;
+  margin: 1em auto;
+  box-shadow: 0px 0px 1px 0px #aaa;
+  background: #eee;
+  position: relative;
+}
+
+.Demo-swiper__slide {
+  display: block;
+  text-align:center;
+  width: 100%;
+  height: 300px;
+  line-height: 300px;
+}
+
+.Demo-info {
+  text-align: center;
+  color: #939393;
+  font-style: italic;
+  margin: 25px 0 35px;
+  font-size: 1.2em;
+}
+
+.Demo-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Demo-controls__control {
+  border-radius: 2px;
+  border: 1px solid #007aff;
+  color: #007aff;
+  text-align: center;
+  line-height: 55px;
+  width: 55px;
+  height: 55px;
+  font-size: 2em;
+  cursor: pointer;
+
+  /** disable text selection on double click */
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+}
+
+.Demo-controls__control:not(:last-of-type) {
+  margin-right: 15px;
+}
