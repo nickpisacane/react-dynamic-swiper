@@ -188,6 +188,7 @@ describe('<Swiper/>', function() {
     }
 
     const wrapper = mount(<Container/>)
+    const firstSwiper = wrapper.instance().swiper()
     expect(wrapper.instance().swiper().slides).to.have.length(3)
 
     wrapper.setState({
@@ -195,6 +196,7 @@ describe('<Swiper/>', function() {
     })
 
     expect(wrapper.instance().swiper().slides).to.have.length(6)
+    expect(firstSwiper).to.equal(wrapper.instance().swiper())
   })
 
   it('invokes <Slide/> childrens onActive if provided', () => {
