@@ -189,8 +189,8 @@ describe('<Swiper/>', function() {
 
     const wrapper = mount(<Container/>)
     const firstSwiper = wrapper.instance().swiper()
-    expect(wrapper.instance().swiper().slides).to.have.length(3)
-
+    expect(firstSwiper.slides).to.have.length(3)
+    
     wrapper.setState({
       items: [1, 2, 3, 4, 5, 6]
     })
