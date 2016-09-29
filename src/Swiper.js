@@ -126,8 +126,8 @@ export default class Swiper extends Component {
       prevProps.navigation !== this.props.navigation ||
       prevProps.nextButton !== this.props.nextButton ||
       prevProps.prevButton !== this.props.prevButton ||
-      prevProps.pagintion !== this.props.pagination ||
-      prevProps.scrollBar !== this.props.scrollbar
+      prevProps.pagination !== this.props.pagination ||
+      prevProps.scrollBar !== this.props.scrollBar
   }
 
   /**
@@ -158,8 +158,10 @@ export default class Swiper extends Component {
     }
 
     if (nextSlidesCount !== this._slidesCount) {
-      this.swiper().update()
+      const index = Math.min(this._swiper.activeIndex, nextSlidesCount - 1)
+      this._swiper.update()
       this._slidesCount = nextSlidesCount
+      this._swiper.slideTo(index, 0, false)
     }
   }
 
