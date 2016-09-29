@@ -2,7 +2,9 @@
 [![Travis][travis-image]][travis-url]
 
 React wrapper for [iDangerous-Swiper][idangerous-swiper] that auto-magically
-reinitializes and updates slides for you.
+reinitializes and updates when configuration changes.
+
+**[Demo](https://nickpisacane.github.io/react-dynamic-swiper)**
 
 # Installation
 ```sh
@@ -30,8 +32,8 @@ function MySwiper() {
 //
 // Swiper will automatically update swiper instance when children change (i.e. Slides),
 // and/or re-initialize if swiper options change. Also, event handlers
-// (i.e. `onTouchMove`) are delegated, changing them will require no reinitialization
-// and will still work.
+// (`onTouchMove`, `onSlideChangeEnd`, etc.) are delegated. Changing them will
+// require no reinitialization, while still functioning as expected.
 import React, { Component } from 'react'
 import { Swiper, Slide } from 'react-dynamic-swiper'
 import 'react-dynamic-swiper/styles.css'
