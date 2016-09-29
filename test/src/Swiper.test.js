@@ -236,9 +236,11 @@ function itReInitializes(options = {}) {
   it(`re-initializes swiper when ${options.propName} changes`, () => {
     const onInitSwiper = sinon.spy()
     const wrapper = mount(<Swiper {...options.props} onInitSwiper={onInitSwiper}/>)
+    const firstSwiper = wrapper.instance().swiper()
     options.before(wrapper)
     wrapper.setProps(options.nextProps)
     expect(onInitSwiper.callCount).to.equal(2)
     options.after(wrapper)
+    expect(firstSwiper).to.not.equal(wrapper.instance().swiper())
   })
 }
