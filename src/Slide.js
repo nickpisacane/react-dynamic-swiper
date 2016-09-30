@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
+import omit from 'lodash.omit'
 import cx from 'classnames'
 
-export default function Slide({ children, className, onActive, ...rest }) {
+export default function Slide({ children, className, ...rest }) {
   return (
-    <div className={cx('swiper-slide', className)} {...rest}>
+    <div className={cx('swiper-slide', className)} {...omit(rest, 'onActive')}>
       {children}
     </div>
   )
@@ -11,4 +12,6 @@ export default function Slide({ children, className, onActive, ...rest }) {
 
 Slide.propTypes = {
   onActive: PropTypes.func,
+  children: PropTypes.node,
+  className: PropTypes.string,
 }
