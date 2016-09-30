@@ -142,6 +142,18 @@ describe('<Swiper/>', function() {
     propName: 'navigation',
     props: { navigation: false },
     nextProps: { navigation: true },
+    before: wrapper => {
+      expect(wrapper.contains(<div className="swiper-button-prev"/>))
+        .to.equal(false)
+      expect(wrapper.contains(<div className="swiper-button-next"/>))
+        .to.equal(false)
+    },
+    after: wrapper => {
+      expect(wrapper.contains(<div className="swiper-button-prev"/>))
+        .to.equal(true)
+      expect(wrapper.contains(<div className="swiper-button-next"/>))
+        .to.equal(true)
+    }
   })
 
   itReInitializes({
@@ -168,6 +180,28 @@ describe('<Swiper/>', function() {
     propName: 'scrollBar',
     props: { scrollBar: true },
     nextProps: { scrollBar: false },
+    before: wrapper => {
+      expect(wrapper.contains(<div className="swiper-scrollbar"/>))
+        .to.equal(true)
+    },
+    after: wrapper => {
+      expect(wrapper.contains(<div className="swiper-scrollbar"/>))
+        .to.equal(false)
+    }
+  })
+
+  itReInitializes({
+    propName: 'pagination',
+    props: { pagination: false },
+    nextProps: { pagination: true },
+    before: wrapper => {
+      expect(wrapper.contains(<div className="swiper-pagination"/>))
+        .to.equal(false)
+    },
+    after: wrapper => {
+      expect(wrapper.contains(<div className="swiper-pagination"/>))
+        .to.equal(true)
+    }
   })
 
   it('syncs <Slide/> children with swiper instance', () => {
@@ -190,7 +224,7 @@ describe('<Swiper/>', function() {
     const wrapper = mount(<Container/>)
     const firstSwiper = wrapper.instance().swiper()
     expect(firstSwiper.slides).to.have.length(3)
-    
+
     wrapper.setState({
       items: [1, 2, 3, 4, 5, 6]
     })
