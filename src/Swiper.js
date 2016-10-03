@@ -48,6 +48,7 @@ export default class Swiper extends Component {
       swiperOptions, navigation, pagination, scrollBar, onInitSwiper,
     } = this.props
     const opts = {}
+    const activeIndex = this._swiper ? this._swiper.activeIndex : 0
 
     if (pagination) opts.pagination = this._pagination
     if (scrollBar) opts.scrollbar = this._scrollBar
@@ -60,6 +61,11 @@ export default class Swiper extends Component {
       this._container,
       Object.assign(opts, swiperOptions)
     )
+
+    if (activeIndex) {
+      const index = Math.min(activeIndex, this._getSlideChildren().length - 1)
+      this._swiper.slideTo(index, 0, false)
+    }
 
     this._swiper.on('onSlideChangeEnd', () => {
       const activeSlide = this._getSlideChildren()[this._swiper.activeIndex]
