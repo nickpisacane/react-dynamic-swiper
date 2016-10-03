@@ -1,6 +1,8 @@
+// Auto-Generated
+export default `
 import React, { Component } from 'react'
-import { Swiper, Slide } from '../../lib'
-import '../../lib/styles.css'
+import { Swiper, Slide } from 'react-dynamic-swiper'
+import 'react-dynamic-swiper/styles.css'
 
 import './Demo.css'
 
@@ -83,4 +85,4 @@ export default class Demo extends Component {
       </div>
     )
   }
-}
+}`

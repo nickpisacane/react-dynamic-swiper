@@ -51,3 +51,72 @@
 .Demo-controls__control:not(:last-of-type) {
   margin-right: 15px;
 }
+
+
+
+.Demo-options {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Demo-options__checkbox {
+	height: 40px;
+  min-width: 124px;
+  display: inline-block;
+  position: relative;
+}
+
+.Demo-options__checkbox input[type=checkbox] {
+  visibility: hidden;
+}
+
+.Demo-options__checkbox label {
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  padding-left: 25px;
+  line-height: 25px;
+  /** disable text selection on double click */
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+}
+
+.Demo-options__checkbox label::before {
+  content: '';
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	top: 0;
+  left: 0;
+	background: #eee;
+	border: 1px solid #007aff;
+}
+
+.Demo-options__checkbox label::after {
+  opacity: 0.2;
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 5px;
+  background: transparent;
+  top: 7px;
+  left: 8px;
+  border: 2px solid #007aff;
+  border-top: none;
+  border-right: none;
+
+  transform: rotate(-45deg);
+}
+
+.Demo-options__checkbox label:hover::after {
+	opacity: 0.5;
+}
+
+.Demo-options__checkbox input[type=checkbox]:checked + label::after {
+	opacity: 1 !important;
+}

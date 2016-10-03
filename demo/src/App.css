@@ -3,3 +3,15 @@
   align-items: center;
   justify-content: center;
 }
+
+.App-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App-header__title {
+  text-align: center;
+  color: #007aff;
+  margin-right: 30px;
+}

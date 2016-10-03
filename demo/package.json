@@ -15,6 +15,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-code-file": "echo \"// Auto-Generated\\nexport default \\`\\n$(sed 's:../../lib:react-dynamic-swiper:' < src/Demo.js)\\`\" > src/code.js"
   }
 }
