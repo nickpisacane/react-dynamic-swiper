@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-swiper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React wrapper for IDangerous Swiper that auto-magically updates slides, and reinitializes.",
   "main": "lib",
   "scripts": {
