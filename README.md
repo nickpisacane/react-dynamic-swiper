@@ -36,7 +36,7 @@ function MySwiper() {
 // require no reinitialization, while still functioning as expected.
 import React, { Component } from 'react'
 import { Swiper, Slide } from 'react-dynamic-swiper'
-import 'react-dynamic-swiper/styles.css'
+import 'react-dynamic-swiper/lib/styles.css'
 
 class MySwiper extends Component {
   constructor(props, context) {
