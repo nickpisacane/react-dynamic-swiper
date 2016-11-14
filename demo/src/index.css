@@ -1,5 +1,14 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font: 16px/1.625 "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #007aff;
+}
+
+a:hover {
+  text-decoration: underline;
 }

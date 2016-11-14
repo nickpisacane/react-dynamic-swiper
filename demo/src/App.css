@@ -8,10 +8,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0px;
 }
 
 .App-header__title {
   text-align: center;
   color: #007aff;
   margin-right: 30px;
+}
+
+.App-header__title a:hover {
+  text-decoration: none !important;
+}
+
+.App-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+.App-intro {
+  margin-top: 0px !important;
+}
+
+.App-footer a:not(:last-of-type) {
+  margin-right: 15px;
 }
