@@ -7,8 +7,9 @@ import './Demo.css'
 const OPTION_KEYS = ['navigation', 'pagination', 'scrollBar']
 
 export default class Demo extends Component {
-  constructor(props, context) {
-    super(props, context)
+  constructor() {
+    super()
+
     this.decrement = this.decrement.bind(this)
     this.increment = this.increment.bind(this)
     this.state = {
@@ -17,7 +18,7 @@ export default class Demo extends Component {
         navigation: true,
         pagination: true,
         scrollBar: false,
-      },
+      }
     }
   }
 
