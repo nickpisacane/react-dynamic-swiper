@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import Highlight from 'react-highlight'
 import Stargazers from './Stargazers'
 import Demo from './Demo'
 import './App.css'
-import code from './code'
 
 export default class App extends Component {
   render() {
@@ -37,7 +35,7 @@ export default class App extends Component {
             target="_blank"
             href="https://github.com/nickpisacane/react-dynamic-swiper/blob/master/demo/src/Demo.js"
           >
-            Veiw Demo Source
+            View Demo Source
           </a>
         </div>
       </div>
