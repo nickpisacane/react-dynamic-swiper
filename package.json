@@ -8,6 +8,7 @@
     "build-lib": "./node_modules/.bin/babel src --out-dir lib && cp src/styles.css lib",
     "build-docs": "npm run build-lib && rm -rf docs && mkdir docs && cd demo && npm install && npm run build && mv build/* ../docs && rm -rf build",
     "prepublish": "npm run build-lib",
+    "copy-styles": "node scripts/copy-swiper-styles.js",
     "lint": "./node_modules/.bin/eslint src"
   },
   "keywords": [
