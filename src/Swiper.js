@@ -20,7 +20,7 @@ export default class Swiper extends Component {
     nextButton: PropTypes.element,
     pagination: BoolOrElementType,
     scrollBar: BoolOrElementType,
-    onInitSwiper: PropTypes.func,
+    onInitSwiper: PropTypes.func
   }, EventPropTypes)
 
   static defaultProps = {
@@ -28,7 +28,7 @@ export default class Swiper extends Component {
     navigation: true,
     pagination: true,
     scrollBar: false,
-    onInitSwiper: () => {},
+    onInitSwiper: () => {}
   }
 
   _swiper = null
@@ -43,9 +43,9 @@ export default class Swiper extends Component {
    * Initialize Swiper instance.
    * @private
    */
-  _initSwiper() {
+  _initSwiper () {
     const {
-      swiperOptions, navigation, pagination, scrollBar, onInitSwiper,
+      swiperOptions, navigation, pagination, scrollBar, onInitSwiper
     } = this.props
     const opts = {}
     const activeIndex = this._swiper ? this._swiper.activeIndex : 0
@@ -82,9 +82,9 @@ export default class Swiper extends Component {
    * Delegates all swiper events to event handlers passed in props.
    * @private
    */
-  _delegateSwiperEvents() {
+  _delegateSwiperEvents () {
     events.forEach(event => {
-      this._swiper.on(event, function() {
+      this._swiper.on(event, function () {
         if (this.props[event] && typeof this.props[event] === 'function') {
           this.props[event].apply(null, arguments)
         }
@@ -98,7 +98,7 @@ export default class Swiper extends Component {
    * @param {?Array<Element>} Children Child elements, if omitted uses own children.
    * @return {Array}
    */
-  _getSlideChildren(children) {
+  _getSlideChildren (children) {
     children = children || this.props.children
     return Children.toArray(children)
       .filter(child => child.type === Slide)
@@ -114,10 +114,10 @@ export default class Swiper extends Component {
    * @param  {Element}  node      Optional element.
    * @return {Element}
    */
-  _renderOptional(predicate, className, refFn, node) {
+  _renderOptional (predicate, className, refFn, node) {
     if (!predicate) return null
     if (node) return React.cloneElement(node, { ref: refFn })
-    return <div className={className} ref={refFn}/>
+    return <div className={className} ref={refFn} />
   }
 
   /**
@@ -127,7 +127,7 @@ export default class Swiper extends Component {
    * @param  {Object} prevProps Previous props.
    * @return {Boolean}
    */
-  _shouldReInitialize(prevProps) {
+  _shouldReInitialize (prevProps) {
     return !deepEqual(prevProps.swiperOptions, this.props.swiperOptions) ||
       prevProps.navigation !== this.props.navigation ||
       prevProps.nextButton !== this.props.nextButton ||
@@ -140,20 +140,20 @@ export default class Swiper extends Component {
    * Access internal Swiper instance.
    * @return {Swiper}
    */
-  swiper() {
+  swiper () {
     return this._swiper
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this._initSwiper()
     this._slidesCount = this._getSlideChildren().length
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this._swiper.destroy()
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     const shouldReInitialize = this._shouldReInitialize(prevProps)
     const nextSlidesCount = this._getSlideChildren().length
 
@@ -171,16 +171,16 @@ export default class Swiper extends Component {
     }
   }
 
-  render() {
+  render () {
     const {
       className, wrapperClassName, pagination, navigation, prevButton,
-      nextButton, scrollBar,
+      nextButton, scrollBar
     } = this.props
 
     return (
       <div
         className={cx('swiper-container', className)}
-        ref={node => this._container = node}
+        ref={node => { this._container = node }}
       >
         <div className={cx('swiper-wrapper', wrapperClassName)}>
           {this._getSlideChildren()}
@@ -189,29 +189,29 @@ export default class Swiper extends Component {
         {this._renderOptional(
           pagination,
           'swiper-pagination',
-          node => this._pagination = node,
-          typeof pagination === 'boolean' ? false : pagination,
+          node => { this._pagination = node },
+          typeof pagination === 'boolean' ? false : pagination
         )}
 
         {this._renderOptional(
           navigation,
           'swiper-button-prev',
-          node => this._prevButton = node,
-          prevButton,
+          node => { this._prevButton = node },
+          prevButton
         )}
 
         {this._renderOptional(
           navigation,
           'swiper-button-next',
-          node => this._nextButton = node,
-          nextButton,
+          node => { this._nextButton = node },
+          nextButton
         )}
 
         {this._renderOptional(
           scrollBar,
           'swiper-scrollbar',
-          node => this._scrollBar = node,
-          typeof scrollBar === 'boolean' ? false : scrollBar,
+          node => { this._scrollBar = node },
+          typeof scrollBar === 'boolean' ? false : scrollBar
         )}
       </div>
     )

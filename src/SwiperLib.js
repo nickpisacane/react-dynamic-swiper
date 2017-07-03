@@ -4,5 +4,5 @@ const isBrowser = typeof window === 'object' &&
 
 export default (() => {
   if (isBrowser) return require('swiper')
-  return function Swiper(){}
+  return function Swiper () {}
 })()
