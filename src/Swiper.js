@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react'
 import deepEqual from 'deep-equal'
 import cx from 'classnames'
+import omit from 'lodash.omit'
 
 import SwiperLib from './SwiperLib'
 import Slide from './Slide'
@@ -13,6 +14,7 @@ const BoolOrElementType = PropTypes.oneOfType([
 
 export default class Swiper extends Component {
   static propTypes = Object.assign({
+    containerClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
     swiperOptions: PropTypes.object,
     navigation: PropTypes.bool,
@@ -137,6 +139,25 @@ export default class Swiper extends Component {
   }
 
   /**
+   * Get props
+   * @param {Object} props Props to filter
+   * @return {Object}
+   */
+  _getNormProps (props) {
+    return omit(props, events.concat([
+      'containerClassName',
+      'wrapperClassName',
+      'swiperOptions',
+      'navigation',
+      'prevButton',
+      'nextButton',
+      'pagination',
+      'scrollBar',
+      'onInitSwiper'
+    ]))
+  }
+
+  /**
    * Access internal Swiper instance.
    * @return {Swiper}
    */
@@ -173,46 +194,54 @@ export default class Swiper extends Component {
 
   render () {
     const {
-      className, wrapperClassName, pagination, navigation, prevButton,
-      nextButton, scrollBar
+      pagination,
+      navigation,
+      prevButton,
+      nextButton,
+      scrollBar,
+      wrapperClassName,
+      containerClassName,
+      ...rest
     } = this.props
 
     return (
-      <div
-        className={cx('swiper-container', className)}
-        ref={node => { this._container = node }}
-      >
-        <div className={cx('swiper-wrapper', wrapperClassName)}>
-          {this._getSlideChildren()}
+      <div {...this._getNormProps(rest)}>
+        <div
+          className={cx('swiper-container', containerClassName)}
+          ref={node => { this._container = node }}
+        >
+          <div className={cx('swiper-wrapper', wrapperClassName)}>
+            {this._getSlideChildren()}
+          </div>
+
+          {this._renderOptional(
+            pagination,
+            'swiper-pagination',
+            node => { this._pagination = node },
+            typeof pagination === 'boolean' ? false : pagination
+          )}
+
+          {this._renderOptional(
+            navigation,
+            'swiper-button-prev',
+            node => { this._prevButton = node },
+            prevButton
+          )}
+
+          {this._renderOptional(
+            navigation,
+            'swiper-button-next',
+            node => { this._nextButton = node },
+            nextButton
+          )}
+
+          {this._renderOptional(
+            scrollBar,
+            'swiper-scrollbar',
+            node => { this._scrollBar = node },
+            typeof scrollBar === 'boolean' ? false : scrollBar
+          )}
         </div>
-
-        {this._renderOptional(
-          pagination,
-          'swiper-pagination',
-          node => { this._pagination = node },
-          typeof pagination === 'boolean' ? false : pagination
-        )}
-
-        {this._renderOptional(
-          navigation,
-          'swiper-button-prev',
-          node => { this._prevButton = node },
-          prevButton
-        )}
-
-        {this._renderOptional(
-          navigation,
-          'swiper-button-next',
-          node => { this._nextButton = node },
-          nextButton
-        )}
-
-        {this._renderOptional(
-          scrollBar,
-          'swiper-scrollbar',
-          node => { this._scrollBar = node },
-          typeof scrollBar === 'boolean' ? false : scrollBar
-        )}
       </div>
     )
   }
