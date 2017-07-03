@@ -9,7 +9,8 @@
     "build-docs": "npm run build-lib && rm -rf docs && mkdir docs && cd demo && npm install && npm run build && mv build/* ../docs && rm -rf build",
     "prepublish": "npm run build-lib",
     "copy-styles": "node scripts/copy-swiper-styles.js",
-    "lint": "standard"
+    "lint": "standard",
+    "lint-fix": "standard --fix"
   },
   "keywords": [
     "swiper",
@@ -53,7 +54,8 @@
       "test",
       "docs",
       "demo",
-      "scripts"
+      "scripts",
+      "lib"
     ]
   }
 }
