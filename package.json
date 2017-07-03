@@ -9,7 +9,7 @@
     "build-docs": "npm run build-lib && rm -rf docs && mkdir docs && cd demo && npm install && npm run build && mv build/* ../docs && rm -rf build",
     "prepublish": "npm run build-lib",
     "copy-styles": "node scripts/copy-swiper-styles.js",
-    "lint": "./node_modules/.bin/eslint src"
+    "lint": "standard"
   },
   "keywords": [
     "swiper",
@@ -33,20 +33,27 @@
     "babel-register": "^6.24.0",
     "chai": "^3.5.0",
     "enzyme": "^2.4.1",
-    "eslint": "^3.6.1",
-    "eslint-plugin-class-property": "^1.0.1",
-    "eslint-plugin-react": "^6.3.0",
     "jsdom": "^9.4.1",
     "mocha": "^3.2.0",
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
-    "sinon": "^2.1.0"
+    "sinon": "^2.1.0",
+    "standard": "^10.0.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "deep-equal": "^1.0.1",
     "lodash.omit": "^4.5.0",
     "swiper": "^3.4.2"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "test",
+      "docs",
+      "demo",
+      "scripts"
+    ]
   }
 }
