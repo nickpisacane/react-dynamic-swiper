@@ -7,9 +7,9 @@ import { Swiper, Slide } from '../../src'
 import { events } from '../../src/swiperEvents'
 
 describe('<Swiper/>', function() {
-  it('renders <div/> with class "swiper-container"', () => {
+  it('renders <div/> which wraps a "swiper-container"', () => {
     const wrapper = shallow(<Swiper/>)
-    expect(wrapper.find('div').first().hasClass('swiper-container'))
+    expect(wrapper.find('div').first().childAt(0).hasClass('swiper-container'))
       .to.equal(true)
   })
 
