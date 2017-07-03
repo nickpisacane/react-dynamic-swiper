@@ -259,6 +259,34 @@ describe('<Swiper/>', function() {
       expect(handlers[event].called).to.equal(true)
     })
   })
+
+  const elementProps = [
+    'pagination',
+    'nextButton',
+    'prevButton',
+    'scrollBar'
+  ]
+
+  elementProps.forEach(elementProp => {
+    it(`${elementProp} can be a function`, () => {
+      let className = `${elementProp}`
+      let called = false
+      let calledWith = null
+      const func = swiper => {
+        called = true
+        calledWith = swiper
+        return <div className={className} />
+      }
+      const props = {
+        [elementProp]: func
+      }
+      const wrapper = shallow(<Swiper {...props} />)
+
+      expect(called).to.equal(true)
+      expect(calledWith).to.equal(wrapper.instance().swiper())
+      expect(wrapper.find(`.${className}`)).to.have.length(1)
+    })
+  })
 })
 
 function itReInitializes(options = {}) {
