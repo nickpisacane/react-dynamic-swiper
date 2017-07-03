@@ -86,6 +86,7 @@ class MySwiper extends Component {
 * scrollBar (Boolean|Element|Function) Scrollbar is hidden by default, use `false` to show.
 * onInitSwiper (Function) Function invoked every time swiper instance is initialized, invoked will `swiper` as first argument.
 * All event handlers are supported as well (i.e. onTouchMove, etc.)
+
 *note*: The following props can be functions: nextButton, prevButton, pagination, and scrollBar. If functions, they
 will be invoked with the underlying `Swiper` instance as the one and only argument. They must return a renderable element.
 #### Methods
