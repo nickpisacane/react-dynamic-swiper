@@ -7,9 +7,13 @@ import SwiperLib from './SwiperLib'
 import Slide from './Slide'
 import { events, EventPropTypes } from './swiperEvents'
 
-const BoolOrElementType = PropTypes.oneOfType([
-  PropTypes.bool,
+const FuncElementType = PropTypes.oneOfType([
+  PropTypes.func,
   PropTypes.element
+])
+const BoolOrFuncElementType = PropTypes.oneOfType([
+  PropTypes.bool,
+  FuncElementType
 ])
 
 export default class Swiper extends Component {
@@ -18,10 +22,10 @@ export default class Swiper extends Component {
     wrapperClassName: PropTypes.string,
     swiperOptions: PropTypes.object,
     navigation: PropTypes.bool,
-    prevButton: PropTypes.element,
-    nextButton: PropTypes.element,
-    pagination: BoolOrElementType,
-    scrollBar: BoolOrElementType,
+    prevButton: FuncElementType,
+    nextButton: FuncElementType,
+    pagination: BoolOrFuncElementType,
+    scrollBar: BoolOrFuncElementType,
     onInitSwiper: PropTypes.func
   }, EventPropTypes)
 
@@ -113,12 +117,19 @@ export default class Swiper extends Component {
    * @param  {Boolean}  predicate Should render?
    * @param  {String}   className Classname for `div`
    * @param  {Function} refFn     Function for `ref` of cloned `node` or `div`
-   * @param  {Element}  node      Optional element.
+   * @param  {Element|Function}  node      Optional element. If `node` is a
+   *                                       function, `swiper` instance will be
+   *                                       passed as an argument.
    * @return {Element}
    */
   _renderOptional (predicate, className, refFn, node) {
     if (!predicate) return null
-    if (node) return React.cloneElement(node, { ref: refFn })
+    if (node) {
+      const _node = typeof node === 'function'
+        ? node(this._swiper)
+        : node
+      return React.cloneElement(_node, { ref: refFn })
+    }
     return <div className={className} ref={refFn} />
   }
 
