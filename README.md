@@ -60,7 +60,7 @@ class MySwiper extends Component {
           slidesPerView: 'auto',
         }}
         nextButton={<MyNextButton/>}
-        prevButton={<MyPrevButton/>}
+        prevButton={swiper => <MyPrevButton onClick={() => swiper.slideNext()} />}
         onTouchMove={(swiper, event) => doSomething()}
       >
         {slides.map(slide => (
@@ -80,12 +80,14 @@ class MySwiper extends Component {
 * swiperOptions (Object) Options passed to swiper instance.
 * wrapperClassName (String) Classname for underlying wrapper element.
 * navigation (Boolean) Display navigation elements (`true`)
-* nextButton (Element) Navigation next element (`<div className="swiper-button-next" />`)
-* nextButton (Element) Navigation previous element (`<div className="swiper-button-prev" />`)
-* pagination (Boolean|Element) Pagination is active by default, use `false` to hide. (`<div className="swiper-pagination" />`)
-* scrollBar (Boolean|Element) Scrollbar is hidden by default, use `false` to show.
+* nextButton (Element|Function) Navigation next element (`<div className="swiper-button-next" />`)
+* nextButton (Element|Function) Navigation previous element (`<div className="swiper-button-prev" />`)
+* pagination (Boolean|Element|Function) Pagination is active by default, use `false` to hide. (`<div className="swiper-pagination" />`)
+* scrollBar (Boolean|Element|Function) Scrollbar is hidden by default, use `false` to show.
 * onInitSwiper (Function) Function invoked every time swiper instance is initialized, invoked will `swiper` as first argument.
 * All event handlers are supported as well (i.e. onTouchMove, etc.)
+*note*: The following props can be functions: nextButton, prevButton, pagination, and scrollBar. If functions, they
+will be invoked with the underlying `Swiper` instance as the one and only argument. They must return a renderable element.
 #### Methods
 * swiper() Returns underlying swiper instance.
 
