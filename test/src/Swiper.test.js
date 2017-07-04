@@ -269,22 +269,38 @@ describe('<Swiper/>', function() {
 
   elementProps.forEach(elementProp => {
     it(`${elementProp} can be a function`, () => {
-      let className = `${elementProp}`
+      const className = `${elementProp}`
+      const onInitSpy = sinon.spy()
       let called = false
       let calledWith = null
+      let callCount = 0
       const func = swiper => {
         called = true
         calledWith = swiper
+        callCount++
         return <div className={className} />
       }
       const props = {
-        [elementProp]: func
+        [elementProp]: func,
+        onInitSwiper: onInitSpy
       }
-      const wrapper = shallow(<Swiper {...props} />)
+      const wrapper = mount(<Swiper {...props} />)
+      const firstSwiper = wrapper.instance().swiper()
 
       expect(called).to.equal(true)
       expect(calledWith).to.equal(wrapper.instance().swiper())
+      expect(callCount).to.be.above(1)
       expect(wrapper.find(`.${className}`)).to.have.length(1)
+      const prevCallCount = callCount
+
+      // Re-renders when `Swiper` changes
+      wrapper.setProps(Object.assign({}, props, {
+        swiperOptions: { slidesPerView: 42 }
+      }))
+      expect(calledWith).to.equal(wrapper.instance().swiper())
+      expect(firstSwiper).to.not.equal(wrapper.instance().swiper())
+      expect(callCount).to.be.above(prevCallCount)
+      expect(onInitSpy.callCount).to.equal(2)
     })
   })
 })
