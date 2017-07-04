@@ -46,12 +46,24 @@ export default class Swiper extends Component {
   _slidesCount = 0
 
   /**
+   * Keep a reference of the `_swiper` in state so we can re-render when
+   * it changes.
+   */
+  state = {
+    swiper: null
+  }
+
+  /**
    * Initialize Swiper instance.
    * @private
    */
   _initSwiper () {
     const {
-      swiperOptions, navigation, pagination, scrollBar, onInitSwiper
+      swiperOptions,
+      navigation,
+      pagination,
+      scrollBar,
+      onInitSwiper
     } = this.props
     const opts = {}
     const activeIndex = this._swiper ? this._swiper.activeIndex : 0
@@ -81,6 +93,7 @@ export default class Swiper extends Component {
     })
 
     this._delegateSwiperEvents()
+    this.setState({ swiper: this._swiper })
     onInitSwiper(this._swiper)
   }
 
@@ -126,7 +139,7 @@ export default class Swiper extends Component {
     if (!predicate) return null
     if (node) {
       const _node = typeof node === 'function'
-        ? node(this._swiper)
+        ? node(this.state.swiper)
         : node
       return React.cloneElement(_node, { ref: refFn })
     }
