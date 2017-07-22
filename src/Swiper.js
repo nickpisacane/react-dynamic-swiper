@@ -1,5 +1,5 @@
 import React, { Component, Children } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import deepEqual from 'deep-equal'
 import cx from 'classnames'
 import omit from 'lodash.omit'
