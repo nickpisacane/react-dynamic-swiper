@@ -1233,6 +1233,12 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
+dom7@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/dom7/-/dom7-2.0.3.tgz#610c530d32ebd9690d3959b19a0f379584f24fc4"
+  dependencies:
+    ssr-window "^1.0.0"
+
 domelementtype@1, domelementtype@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
@@ -3045,6 +3051,10 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
+ssr-window@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-1.0.0.tgz#8ed1b6beaa0a371ba7e74d6515d584c3f1cf973c"
+
 standard-engine@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/standard-engine/-/standard-engine-7.0.0.tgz#ebb77b9c8fc2c8165ffa353bd91ba0dff41af690"
@@ -3115,9 +3125,12 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-swiper@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-3.4.2.tgz#39d6b410b1a39833e1f72d3b72999df5f5e38392"
+swiper@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-4.2.0.tgz#1490de68e7ba4eeecb54565de06005a7398455ee"
+  dependencies:
+    dom7 "^2.0.3"
+    ssr-window "^1.0.0"
 
 symbol-tree@^3.2.1:
   version "3.2.2"
