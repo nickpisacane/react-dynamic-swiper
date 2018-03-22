@@ -166,13 +166,15 @@ describe('<Swiper/>', function() {
     },
     before: wrapper => {
       const swiper = wrapper.instance().swiper()
-      expect(swiper.params.nextButton).to.equal(null)
-      expect(swiper.params.prevButton).to.equal(null)
+      const {nextEl, prevEl} = swiper.navigation
+      expect(nextEl).to.equal(undefined)
+      expect(prevEl).to.equal(undefined)
     },
     after: wrapper => {
       const swiper = wrapper.instance().swiper()
-      expect(swiper.params.prevButton).to.equal(wrapper.instance()._prevButton)
-      expect(swiper.params.nextButton).to.equal(wrapper.instance()._nextButton)
+      const {nextEl, prevEl} = swiper.navigation
+      expect(prevEl).to.equal(wrapper.instance()._prevButton)
+      expect(nextEl).to.equal(wrapper.instance()._nextButton)
     }
   })
 
@@ -222,7 +224,14 @@ describe('<Swiper/>', function() {
     }
 
     const wrapper = mount(<Container/>)
+    // @see: https://github.com/nolimits4web/swiper/blob/master/src/components/core/update/updateSlides.js#L38
+    // Slides will not be calculated without a `size`, which requires that 
+    // the `Swiper.$el` element has a width and height greater than 0, which in
+    // the JSDOM environment, is not the case. Sketchy, but works: manually
+    // set `Swiper.size` and call `Swiper.updateSlides()`
     const firstSwiper = wrapper.instance().swiper()
+    firstSwiper.size = 42
+    firstSwiper.updateSlides()
     expect(firstSwiper.slides).to.have.length(3)
 
     wrapper.setState({
