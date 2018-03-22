@@ -47,11 +47,6 @@ export default class Demo extends Component {
           <Swiper
             swiperOptions={{scrollbarHide: false, loop: true, loopedSlides: 0}}
             {...this.state.options}
-            onSliderMove={
-              () => {
-                console.log('wtf: ')
-              }
-            }
           >
             {(new Array(this.state.slideCount).fill(null).map((_, i) => (
               <Slide className="Demo-swiper__slide" key={i}>
