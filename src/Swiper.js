@@ -26,7 +26,9 @@ export default class Swiper extends Component {
     prevButton: FuncElementType,
     nextButton: FuncElementType,
     pagination: BoolOrFuncElementType,
+    paginationType: PropTypes.string,
     scrollBar: BoolOrFuncElementType,
+    scrollBarHide: PropTypes.bool,
     onInitSwiper: PropTypes.func
   }, EventPropTypes)
 
@@ -35,6 +37,7 @@ export default class Swiper extends Component {
     navigation: true,
     pagination: true,
     scrollBar: false,
+    scrollBarHide: false,
     onInitSwiper: () => {}
   }
 
@@ -63,17 +66,34 @@ export default class Swiper extends Component {
       swiperOptions,
       navigation,
       pagination,
+      paginationType,
       scrollBar,
+      scrollBarHide,
       onInitSwiper
     } = this.props
     const opts = {}
     const activeIndex = this._swiper ? this._swiper.activeIndex : 0
 
-    if (pagination) opts.pagination = this._pagination
-    if (scrollBar) opts.scrollbar = this._scrollBar
+    if (pagination) {
+      opts.pagination = {
+        el: this._pagination
+      }
+
+      if (paginationType) {
+        opts.pagination.type = paginationType
+      }
+    }
+    if (scrollBar) {
+      opts.scrollbar = {
+        el: this._scrollBar,
+        hide: scrollBarHide
+      }
+    }
     if (navigation) {
-      opts.prevButton = this._prevButton
-      opts.nextButton = this._nextButton
+      opts.navigation = {
+        prevEl: this._prevButton,
+        nextEl: this._nextButton
+      }
     }
 
     this._swiper = new SwiperLib(
@@ -177,7 +197,9 @@ export default class Swiper extends Component {
       'prevButton',
       'nextButton',
       'pagination',
+      'paginationType',
       'scrollBar',
+      'scrollBarHide',
       'onInitSwiper'
     ]))
   }
