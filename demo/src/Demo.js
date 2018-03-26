@@ -4,7 +4,7 @@ import '../../lib/styles.css'
 
 import './Demo.css'
 
-const OPTION_KEYS = ['navigation', 'pagination', 'scrollBar']
+const OPTION_KEYS = ['navigation', 'pagination', 'scrollBar', 'loop']
 
 export default class Demo extends Component {
   constructor() {
@@ -18,6 +18,7 @@ export default class Demo extends Component {
         navigation: true,
         pagination: true,
         scrollBar: false,
+        loop: false,
       }
     }
   }
@@ -45,7 +46,7 @@ export default class Demo extends Component {
       <div className="Demo">
         <div className="Demo-swiper">
           <Swiper
-            swiperOptions={{scrollbarHide: false, loop: true, loopedSlides: 0}}
+            swiperOptions={{scrollbarHide: false}}
             {...this.state.options}
           >
             {(new Array(this.state.slideCount).fill(null).map((_, i) => (
