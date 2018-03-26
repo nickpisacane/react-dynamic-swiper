@@ -218,7 +218,6 @@ export default class Swiper extends Component {
 
   _reInit() {
     this._swiper.destroy(true, true)
-    // debugger
     this._initSwiper()
   }
 
@@ -239,7 +238,6 @@ export default class Swiper extends Component {
       const duplicates = [].slice.call(
         this._container.querySelectorAll(`.${slideDuplicateClass}`)
       ).map(dupe => {
-        console.log(dupe.innerHTML)
         // NOTE: When iDangerous-Swiper creates the duplicates it deeply clones
         // the nodes. Thus, before rendering the portals we must clear the
         // content. Dirty, but I do not see another possible way.
