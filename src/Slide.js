@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 // NOTE: The Slide component should be thought of as a light wrapper for content.
 // Consider the use of fragments below, adding things like an `click` handler, or
-// any other DOM event handlers through React properties will simply not work. 
+// any other DOM event handlers through React properties will simply not work.
 // Should this trigger a warning?
 export default function Slide ({
   children,

@@ -68,9 +68,7 @@ export default class Swiper extends Component {
       swiperOptions,
       navigation,
       pagination,
-      paginationType,
       scrollBar,
-      scrollBarHide,
       onInitSwiper,
       loop
     } = this.props
@@ -85,8 +83,7 @@ export default class Swiper extends Component {
     if (scrollBar) {
       opts.scrollbar = opts.scrollbar || {}
       Object.assign(opts.scrollbar, {
-        el: this._scrollBar,
-        hide: scrollBarHide
+        el: this._scrollBar
       })
     }
     if (navigation) {
@@ -216,7 +213,7 @@ export default class Swiper extends Component {
     ]))
   }
 
-  _reInit() {
+  _reInit () {
     this._swiper.destroy(true, true)
     this._initSwiper()
   }
@@ -242,7 +239,6 @@ export default class Swiper extends Component {
         // the nodes. Thus, before rendering the portals we must clear the
         // content. Dirty, but I do not see another possible way.
         dupe.innerHTML = ''
-
 
         return {
           container: dupe,
@@ -283,7 +279,7 @@ export default class Swiper extends Component {
       // NOTE: When in loop mode, the slide indexes are actually different. The
       // 0th index is actually the first duplicate, thus it is essentially like
       // a 1-based index mode (the old 0th is the 1st, so on and so forth). Thus,
-      // to account for this upon re-initialization, increment the current 
+      // to account for this upon re-initialization, increment the current
       // `_activeIndex` if going into a loop mode, and decrement if going out
       // of a loop mode.
       if (prevProps.loop !== this.props.loop) {
@@ -291,7 +287,7 @@ export default class Swiper extends Component {
       }
       return this._reInit()
     }
-    
+
     if (nextSlidesCount !== oldSlidesCount) {
       // NOTE: `swiper.update()` doesn't seem to work when updating slides in
       // loop mode. If so, is this a bug in iDangerous Swiper, or is this our
