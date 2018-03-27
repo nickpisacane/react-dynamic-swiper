@@ -250,7 +250,7 @@ describe('<Swiper/>', function() {
       </Swiper>
     )
 
-    wrapper.instance().swiper().emit('onSlideChangeEnd')
+    wrapper.instance().swiper().emit('slideChange')
     expect(spy.called).to.equal(true)
   })
 
