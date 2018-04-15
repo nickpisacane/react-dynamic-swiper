@@ -1,10 +1,31 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import enzyme, { mount, shallow } from 'enzyme'
 import { expect } from 'chai'
-import sinon from 'sinon'
+import Adapter from 'enzyme-adapter-react-16'
 
 import { Swiper, Slide } from '../../src'
 import { events } from '../../src/swiperEvents'
+
+enzyme.configure({ adapter: new Adapter() })
+
+const sinon = {
+  spy() {
+    const fn = function(...args) {
+      fn.called = true
+      fn.callCount++
+      fn._calledWith.push(args)
+    }
+
+    fn.called = false
+    fn.callCount = 0
+    fn._calledWith = []
+    fn.calledWith = (...args) => fn._calledWith.some(calledArgs => {
+      return calledArgs.every((ca, i) => ca === args[i])
+    })
+
+    return fn
+  }
+}
 
 describe('<Swiper/>', function() {
   it('renders <div/> which wraps a "swiper-container"', () => {
@@ -207,6 +228,9 @@ describe('<Swiper/>', function() {
   })
 
   it('syncs <Slide/> children with swiper instance', () => {
+    const target = document.createElement('target')
+    document.body.appendChild(target)
+
     class Container extends React.Component {
       state = { items: [1, 2, 3] }
 
@@ -223,17 +247,10 @@ describe('<Swiper/>', function() {
       }
     }
 
-    const wrapper = mount(<Container/>)
-    // @see: https://github.com/nolimits4web/swiper/blob/master/src/components/core/update/updateSlides.js#L38
-    // Slides will not be calculated without a `size`, which requires that 
-    // the `Swiper.$el` element has a width and height greater than 0, which in
-    // the JSDOM environment, is not the case. Sketchy, but works: manually
-    // set `Swiper.size` and call `Swiper.updateSlides()`
+    const wrapper = mount(<Container/>, { attachTo: target })
     const firstSwiper = wrapper.instance().swiper()
-    firstSwiper.size = 42
-    firstSwiper.updateSlides()
     expect(firstSwiper.slides).to.have.length(3)
-
+    
     wrapper.setState({
       items: [1, 2, 3, 4, 5, 6]
     })

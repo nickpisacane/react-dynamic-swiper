@@ -1,8 +1,11 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import enzyme, { mount, shallow } from 'enzyme'
 import { expect } from 'chai'
+import Adapter from 'enzyme-adapter-react-16'
 
 import Slide from '../../src/Slide'
+
+enzyme.configure({ adapter: new Adapter() })
 
 describe('<Slide/>', function() {
   it('renders <div/> with className "swiper-slide"', () => {
