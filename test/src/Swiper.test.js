@@ -212,7 +212,7 @@ describe('<Swiper/>', function() {
   })
 
   it('syncs <Slide/> children with swiper instance', () => {
-    const target = document.createElement('target')
+    const target = document.createElement('div')
     document.body.appendChild(target)
 
     class Container extends React.Component {
