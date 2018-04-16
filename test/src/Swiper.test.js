@@ -6,26 +6,10 @@ import Adapter from 'enzyme-adapter-react-16'
 import { Swiper, Slide } from '../../src'
 import { events } from '../../src/swiperEvents'
 
+import createSpy from './spy'
+
 enzyme.configure({ adapter: new Adapter() })
 
-const sinon = {
-  spy() {
-    const fn = function(...args) {
-      fn.called = true
-      fn.callCount++
-      fn._calledWith.push(args)
-    }
-
-    fn.called = false
-    fn.callCount = 0
-    fn._calledWith = []
-    fn.calledWith = (...args) => fn._calledWith.some(calledArgs => {
-      return calledArgs.every((ca, i) => ca === args[i])
-    })
-
-    return fn
-  }
-}
 
 describe('<Swiper/>', function() {
   it('renders <div/> which wraps a "swiper-container"', () => {
@@ -133,7 +117,7 @@ describe('<Swiper/>', function() {
   })
 
   it('calls `onInitSwiper` on mount, and re-initialization', () => {
-    const onInitSwiper = sinon.spy()
+    const onInitSwiper = createSpy()
     const wrapper = mount(<Swiper onInitSwiper={onInitSwiper}/>)
     expect(onInitSwiper.called).to.equal(true)
     expect(onInitSwiper.calledWith(wrapper.instance().swiper())).to.equal(true)
@@ -250,7 +234,7 @@ describe('<Swiper/>', function() {
     const wrapper = mount(<Container/>, { attachTo: target })
     const firstSwiper = wrapper.instance().swiper()
     expect(firstSwiper.slides).to.have.length(3)
-    
+
     wrapper.setState({
       items: [1, 2, 3, 4, 5, 6]
     })
@@ -260,7 +244,7 @@ describe('<Swiper/>', function() {
   })
 
   it('invokes <Slide/> childrens onActive if provided', () => {
-    const spy = sinon.spy()
+    const spy = createSpy()
     const wrapper = mount(
       <Swiper>
         <Slide onActive={spy} />
@@ -273,7 +257,7 @@ describe('<Swiper/>', function() {
 
   it('invokes swiper event handlers passed in props', () => {
     const handlers = events.reduce((obj, event) => {
-      obj[event] = sinon.spy()
+      obj[event] = createSpy()
       return obj
     }, {})
 
@@ -296,7 +280,7 @@ describe('<Swiper/>', function() {
   elementProps.forEach(elementProp => {
     it(`${elementProp} can be a function`, () => {
       const className = `${elementProp}`
-      const onInitSpy = sinon.spy()
+      const onInitSpy = createSpy()
       let called = false
       let calledWith = null
       let callCount = 0
@@ -340,7 +324,7 @@ function itReInitializes(options = {}) {
   }, options)
 
   it(`re-initializes swiper when ${options.propName} changes`, () => {
-    const onInitSwiper = sinon.spy()
+    const onInitSwiper = createSpy()
     const wrapper = mount(<Swiper {...options.props} onInitSwiper={onInitSwiper}/>)
     const firstSwiper = wrapper.instance().swiper()
     options.before(wrapper)
