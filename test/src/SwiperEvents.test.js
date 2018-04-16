@@ -61,4 +61,4 @@ describe('SwiperEvents', () => {
     wrapper.instance().swiper().slideTo(2)
     expect(spies.reachEnd.called).to.equal(true)
   })
-});
+})
