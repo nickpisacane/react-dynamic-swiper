@@ -1,8 +1,9 @@
-export default function spy() {
+export default function spy (func = () => {}) {
   const fn = function(...args) {
     fn.called = true
     fn.callCount++
     fn._calledWith.push(args)
+    func(...args)
   }
 
   fn.called = false
