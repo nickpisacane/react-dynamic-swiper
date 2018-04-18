@@ -151,7 +151,7 @@ export default class Swiper extends Component {
   _getSlideChildren (children) {
     children = children || this.props.children
     return Children.toArray(children)
-      .filter(child => child.type === Slide)
+      .filter(child => child.type && child.type._isReactDynamicSwiperSlide)
   }
 
   /**
