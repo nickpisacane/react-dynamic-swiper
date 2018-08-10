@@ -24,8 +24,6 @@ export default function Slide ({
   )
 }
 
-Slide._isReactDynamicSwiperSlide = true
-
 Slide.propTypes = {
   onActive: PropTypes.func,
   children: PropTypes.node,
