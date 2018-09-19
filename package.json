@@ -11,7 +11,8 @@
     "prepublish": "npm run build-lib",
     "copy-styles": "node scripts/copy-swiper-styles.js",
     "lint": "standard",
-    "lint-fix": "standard --fix"
+    "lint-fix": "standard --fix",
+    "format": "prettier --write \"{src,test}**/*.js\""
   },
   "keywords": [
     "swiper",
