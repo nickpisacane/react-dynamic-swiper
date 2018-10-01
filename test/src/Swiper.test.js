@@ -33,7 +33,7 @@ describe('<Swiper/>', function() {
   })
 
   it('only renders <Slide/> children in wrapper', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Swiper>
         <Slide testProp="foo"/>
         <Slide testProp="foo"/>
