@@ -9,28 +9,28 @@ import SwiperLib from './SwiperLib'
 import Slide from './Slide'
 import { events, EventPropTypes } from './swiperEvents'
 
-const FuncElementType = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.element
-])
+const FuncElementType = PropTypes.oneOfType([PropTypes.func, PropTypes.element])
 const BoolOrFuncElementType = PropTypes.oneOfType([
   PropTypes.bool,
   FuncElementType
 ])
 
 export default class Swiper extends Component {
-  static propTypes = Object.assign({
-    containerClassName: PropTypes.string,
-    wrapperClassName: PropTypes.string,
-    swiperOptions: PropTypes.object,
-    navigation: PropTypes.bool,
-    prevButton: FuncElementType,
-    nextButton: FuncElementType,
-    pagination: BoolOrFuncElementType,
-    scrollBar: BoolOrFuncElementType,
-    loop: PropTypes.bool,
-    onInitSwiper: PropTypes.func
-  }, EventPropTypes)
+  static propTypes = Object.assign(
+    {
+      containerClassName: PropTypes.string,
+      wrapperClassName: PropTypes.string,
+      swiperOptions: PropTypes.object,
+      navigation: PropTypes.bool,
+      prevButton: FuncElementType,
+      nextButton: FuncElementType,
+      pagination: BoolOrFuncElementType,
+      scrollBar: BoolOrFuncElementType,
+      loop: PropTypes.bool,
+      onInitSwiper: PropTypes.func
+    },
+    EventPropTypes
+  )
 
   static defaultProps = {
     swiperOptions: {},
@@ -99,7 +99,7 @@ export default class Swiper extends Component {
       if (opts.loop) {
         throw new Error(
           `react-dynamic-swiper: Do not use "loop" on the "swiperOptions", ` +
-          `use the "loop" prop on the Swiper component directly.`
+            `use the "loop" prop on the Swiper component directly.`
         )
       }
     }
@@ -118,7 +118,10 @@ export default class Swiper extends Component {
     })
 
     if (this._activeIndex) {
-      const index = Math.min(this._activeIndex, this._getSlideChildren().length - 1)
+      const index = Math.min(
+        this._activeIndex,
+        this._getSlideChildren().length - 1
+      )
       this._swiper.slideTo(index, 0, false)
     }
 
@@ -134,11 +137,14 @@ export default class Swiper extends Component {
    */
   _delegateSwiperEvents () {
     events.forEach(event => {
-      this._swiper.on(event, function () {
-        if (this.props[event] && typeof this.props[event] === 'function') {
-          this.props[event].apply(null, arguments)
-        }
-      }.bind(this))
+      this._swiper.on(
+        event,
+        function () {
+          if (this.props[event] && typeof this.props[event] === 'function') {
+            this.props[event].apply(null, arguments)
+          }
+        }.bind(this)
+      )
     })
   }
 
@@ -150,8 +156,9 @@ export default class Swiper extends Component {
    */
   _getSlideChildren (children) {
     children = children || this.props.children
-    return Children.toArray(children)
-      .filter(child => child.type && child.type._isReactDynamicSwiperSlide)
+    return Children.toArray(children).filter(
+      child => child.type && child.type._isReactDynamicSwiperSlide
+    )
   }
 
   /**
@@ -169,9 +176,7 @@ export default class Swiper extends Component {
   _renderOptional (predicate, className, refFn, node) {
     if (!predicate) return null
     if (node) {
-      const _node = typeof node === 'function'
-        ? node(this.state.swiper)
-        : node
+      const _node = typeof node === 'function' ? node(this.state.swiper) : node
       return React.cloneElement(_node, { ref: refFn })
     }
     return <div className={className} ref={refFn} />
@@ -185,13 +190,15 @@ export default class Swiper extends Component {
    * @return {Boolean}
    */
   _shouldReInitialize (prevProps) {
-    return !deepEqual(prevProps.swiperOptions, this.props.swiperOptions) ||
+    return (
+      !deepEqual(prevProps.swiperOptions, this.props.swiperOptions) ||
       prevProps.navigation !== this.props.navigation ||
       prevProps.nextButton !== this.props.nextButton ||
       prevProps.prevButton !== this.props.prevButton ||
       prevProps.pagination !== this.props.pagination ||
       prevProps.scrollBar !== this.props.scrollBar ||
       prevProps.loop !== this.props.loop
+    )
   }
 
   /**
@@ -200,17 +207,20 @@ export default class Swiper extends Component {
    * @return {Object}
    */
   _getNormProps (props) {
-    return omit(props, events.concat([
-      'containerClassName',
-      'wrapperClassName',
-      'swiperOptions',
-      'navigation',
-      'prevButton',
-      'nextButton',
-      'pagination',
-      'scrollBar',
-      'onInitSwiper'
-    ]))
+    return omit(
+      props,
+      events.concat([
+        'containerClassName',
+        'wrapperClassName',
+        'swiperOptions',
+        'navigation',
+        'prevButton',
+        'nextButton',
+        'pagination',
+        'scrollBar',
+        'onInitSwiper'
+      ])
+    )
   }
 
   _reInit () {
@@ -220,38 +230,41 @@ export default class Swiper extends Component {
 
   _renderDuplicates () {
     const slides = this._getSlideChildren()
-    return this.state.duplicates.map(portal => (
-      createPortal(cloneElement(slides[portal.index], {
-        isPortaled: true
-      }), portal.container)
-    ))
+    return this.state.duplicates.map(portal =>
+      createPortal(
+        cloneElement(slides[portal.index], {
+          isPortaled: true
+        }),
+        portal.container
+      )
+    )
   }
 
   _createDuplicates () {
     if (this.props.loop) {
       // @see: https://github.com/nolimits4web/swiper/blob/master/src/components/core/loop/loopCreate.js
-      const {slideDuplicateClass} = this._swiper.params
+      const { slideDuplicateClass } = this._swiper.params
 
-      const duplicates = [].slice.call(
-        this._container.querySelectorAll(`.${slideDuplicateClass}`)
-      ).map(dupe => {
-        // NOTE: When iDangerous-Swiper creates the duplicates it deeply clones
-        // the nodes. Thus, before rendering the portals we must clear the
-        // content. Dirty, but I do not see another possible way.
-        dupe.innerHTML = ''
+      const duplicates = [].slice
+        .call(this._container.querySelectorAll(`.${slideDuplicateClass}`))
+        .map(dupe => {
+          // NOTE: When iDangerous-Swiper creates the duplicates it deeply clones
+          // the nodes. Thus, before rendering the portals we must clear the
+          // content. Dirty, but I do not see another possible way.
+          dupe.innerHTML = ''
 
-        return {
-          container: dupe,
-          // @see: https://github.com/nolimits4web/swiper/blob/master/src/components/core/loop/loopCreate.js#L37
-          index: parseInt(dupe.getAttribute('data-swiper-slide-index'), 10)
-        }
-      })
+          return {
+            container: dupe,
+            // @see: https://github.com/nolimits4web/swiper/blob/master/src/components/core/loop/loopCreate.js#L37
+            index: parseInt(dupe.getAttribute('data-swiper-slide-index'), 10)
+          }
+        })
 
       this.setState({ duplicates })
     }
   }
 
-   /**
+  /**
    * Access internal Swiper instance.
    * @return {Swiper}
    */
@@ -319,7 +332,9 @@ export default class Swiper extends Component {
       <div {...this._getNormProps(rest)}>
         <div
           className={cx('swiper-container', containerClassName)}
-          ref={node => { this._container = node }}
+          ref={node => {
+            this._container = node
+          }}
         >
           <div className={cx('swiper-wrapper', wrapperClassName)}>
             {this._getSlideChildren()}
@@ -328,28 +343,36 @@ export default class Swiper extends Component {
           {this._renderOptional(
             pagination,
             'swiper-pagination',
-            node => { this._pagination = node },
+            node => {
+              this._pagination = node
+            },
             typeof pagination === 'boolean' ? false : pagination
           )}
 
           {this._renderOptional(
             navigation,
             'swiper-button-prev',
-            node => { this._prevButton = node },
+            node => {
+              this._prevButton = node
+            },
             prevButton
           )}
 
           {this._renderOptional(
             navigation,
             'swiper-button-next',
-            node => { this._nextButton = node },
+            node => {
+              this._nextButton = node
+            },
             nextButton
           )}
 
           {this._renderOptional(
             scrollBar,
             'swiper-scrollbar',
-            node => { this._scrollBar = node },
+            node => {
+              this._scrollBar = node
+            },
             typeof scrollBar === 'boolean' ? false : scrollBar
           )}
 
