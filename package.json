@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-swiper",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "React wrapper for IDangerous Swiper that auto-magically updates slides, and reinitializes.",
   "main": "lib",
   "scripts": {
@@ -11,8 +11,7 @@
     "prepublish": "npm run build-lib",
     "copy-styles": "node scripts/copy-swiper-styles.js",
     "lint": "standard",
-    "lint-fix": "standard --fix",
-    "format": "prettier --write \"{src,test}**/*.js\""
+    "lint-fix": "standard --fix"
   },
   "keywords": [
     "swiper",
@@ -46,7 +45,6 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^4.0.0-rc.2",
     "mocha": "^3.2.0",
-    "prettier": "^1.14.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "standard": "^10.0.2",
