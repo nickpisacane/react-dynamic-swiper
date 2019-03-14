@@ -81,7 +81,7 @@ class MySwiper extends Component {
 * wrapperClassName (String) Classname for underlying wrapper element.
 * navigation (Boolean) Display navigation elements (`true`)
 * nextButton (Element|Function) Navigation next element (`<div className="swiper-button-next" />`)
-* nextButton (Element|Function) Navigation previous element (`<div className="swiper-button-prev" />`)
+* prevButton (Element|Function) Navigation previous element (`<div className="swiper-button-prev" />`)
 * pagination (Boolean|Element|Function) Pagination is active by default, use `false` to hide. (`<div className="swiper-pagination" />`)
 * scrollBar (Boolean|Element|Function) Scrollbar is hidden by default, use `false` to show.
 * onInitSwiper (Function) Function invoked every time swiper instance is initialized, invoked will `swiper` as first argument.
