@@ -17,8 +17,9 @@ export default class Demo extends Component {
       options: {
         navigation: true,
         pagination: true,
+        paginationClickable: true,
         scrollBar: false,
-        loop: false,
+        loop: false
       }
     }
   }
