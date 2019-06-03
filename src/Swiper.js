@@ -25,6 +25,7 @@ export default class Swiper extends Component {
       prevButton: FuncElementType,
       nextButton: FuncElementType,
       pagination: BoolOrFuncElementType,
+      paginationClickable: PropTypes.bool,
       scrollBar: BoolOrFuncElementType,
       loop: PropTypes.bool,
       onInitSwiper: PropTypes.func
@@ -36,6 +37,7 @@ export default class Swiper extends Component {
     swiperOptions: {},
     navigation: true,
     pagination: true,
+    paginationClickable: false,
     scrollBar: false,
     loop: false,
     onInitSwiper: () => {}
@@ -63,7 +65,7 @@ export default class Swiper extends Component {
    * Initialize Swiper instance.
    * @private
    */
-  _initSwiper () {
+  _initSwiper() {
     const {
       swiperOptions,
       navigation,
@@ -137,11 +139,11 @@ export default class Swiper extends Component {
    * Delegates all swiper events to event handlers passed in props.
    * @private
    */
-  _delegateSwiperEvents () {
+  _delegateSwiperEvents() {
     events.forEach(event => {
       this._swiper.on(
         event,
-        function () {
+        function() {
           if (this.props[event] && typeof this.props[event] === 'function') {
             this.props[event].apply(null, arguments)
           }
@@ -156,7 +158,7 @@ export default class Swiper extends Component {
    * @param {?Array<Element>} Children Child elements, if omitted uses own children.
    * @return {Array}
    */
-  _getSlideChildren (children) {
+  _getSlideChildren(children) {
     children = children || this.props.children
     return Children.toArray(children).filter(
       child => child.type && child.type._isReactDynamicSwiperSlide
@@ -175,7 +177,7 @@ export default class Swiper extends Component {
    *                                       passed as an argument.
    * @return {Element}
    */
-  _renderOptional (predicate, className, refFn, node) {
+  _renderOptional(predicate, className, refFn, node) {
     if (!predicate) return null
     if (node) {
       const _node = typeof node === 'function' ? node(this.state.swiper) : node
@@ -191,7 +193,7 @@ export default class Swiper extends Component {
    * @param  {Object} prevProps Previous props.
    * @return {Boolean}
    */
-  _shouldReInitialize (prevProps) {
+  _shouldReInitialize(prevProps) {
     return (
       !deepEqual(prevProps.swiperOptions, this.props.swiperOptions) ||
       prevProps.navigation !== this.props.navigation ||
@@ -208,7 +210,7 @@ export default class Swiper extends Component {
    * @param {Object} props Props to filter
    * @return {Object}
    */
-  _getNormProps (props) {
+  _getNormProps(props) {
     return omit(
       props,
       events.concat([
@@ -225,12 +227,12 @@ export default class Swiper extends Component {
     )
   }
 
-  _reInit () {
+  _reInit() {
     this._swiper.destroy(true, true)
     this._initSwiper()
   }
 
-  _renderDuplicates () {
+  _renderDuplicates() {
     const slides = this._getSlideChildren()
     return this.state.duplicates.map(portal =>
       createPortal(
@@ -242,7 +244,7 @@ export default class Swiper extends Component {
     )
   }
 
-  _createDuplicates () {
+  _createDuplicates() {
     if (this.props.loop) {
       // @see: https://github.com/nolimits4web/swiper/blob/master/src/components/core/loop/loopCreate.js
       const { slideDuplicateClass } = this._swiper.params
@@ -270,20 +272,20 @@ export default class Swiper extends Component {
    * Access internal Swiper instance.
    * @return {Swiper}
    */
-  swiper () {
+  swiper() {
     return this._swiper
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._initSwiper()
     this._slidesCount = this._getSlideChildren().length
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._swiper.destroy()
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     const shouldReInitialize = this._shouldReInitialize(prevProps)
     const nextSlidesCount = this._getSlideChildren().length
     const oldSlidesCount = this._slidesCount
@@ -318,7 +320,7 @@ export default class Swiper extends Component {
     }
   }
 
-  render () {
+  render() {
     const {
       pagination,
       navigation,
