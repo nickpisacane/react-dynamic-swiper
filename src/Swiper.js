@@ -70,6 +70,7 @@ export default class Swiper extends Component {
       pagination,
       scrollBar,
       onInitSwiper,
+      paginationClickable,
       loop
     } = this.props
     const opts = {}
@@ -77,7 +78,8 @@ export default class Swiper extends Component {
     if (pagination) {
       opts.pagination = opts.pagination || {}
       Object.assign(opts.pagination, {
-        el: this._pagination
+        el: this._pagination,
+        clickable: paginationClickable || false
       })
     }
     if (scrollBar) {
@@ -339,7 +341,6 @@ export default class Swiper extends Component {
           <div className={cx('swiper-wrapper', wrapperClassName)}>
             {this._getSlideChildren()}
           </div>
-
           {this._renderOptional(
             pagination,
             'swiper-pagination',
