@@ -1,4 +1,5 @@
 # react-dynamic-swiper
+
 [![Travis][travis-image]][travis-url]
 
 React wrapper for [iDangerous-Swiper][idangerous-swiper] that auto-magically
@@ -7,23 +8,25 @@ reinitializes and updates when configuration changes.
 **[Demo](https://nickpisacane.github.io/react-dynamic-swiper)**
 
 # Installation
+
 ```sh
 $ npm i --save react-dynamic-swiper
 ```
 
 # Usage
+
 ```js
 // Basic Usage
 function MySwiper() {
   return (
     <Swiper
       swiperOptions={{
-        slidesPerView: 42,
+        slidesPerView: 42
       }}
       navigation={false}
       pagination={false}
     >
-      <Slide onActive={swiper => console.log('Slide Active!')}/>
+      <Slide onActive={swiper => console.log('Slide Active!')} />
     </Swiper>
   )
 }
@@ -47,8 +50,7 @@ class MySwiper extends Component {
   }
 
   componentWillMount() {
-    getAsyncSlideData()
-      .then(slides => this.setState({ slides }))
+    getAsyncSlideData().then(slides => this.setState({ slides }))
   }
 
   render() {
@@ -57,14 +59,16 @@ class MySwiper extends Component {
     return (
       <Swiper
         swiperOptions={{
-          slidesPerView: 'auto',
+          slidesPerView: 'auto'
         }}
-        nextButton={<MyNextButton/>}
-        prevButton={swiper => <MyPrevButton onClick={() => swiper.slideNext()} />}
+        nextButton={<MyNextButton />}
+        prevButton={swiper => (
+          <MyPrevButton onClick={() => swiper.slideNext()} />
+        )}
         onTouchMove={(swiper, event) => doSomething()}
       >
         {slides.map(slide => (
-          <Slide {...slide}/>
+          <Slide {...slide} />
         ))}
       </Swiper>
     )
@@ -74,27 +78,33 @@ class MySwiper extends Component {
 
 # API
 
-##  Swiper
+## Swiper
 
 #### Props
-* swiperOptions (Object) Options passed to swiper instance.
-* wrapperClassName (String) Classname for underlying wrapper element.
-* navigation (Boolean) Display navigation elements (`true`)
-* nextButton (Element|Function) Navigation next element (`<div className="swiper-button-next" />`)
-* prevButton (Element|Function) Navigation previous element (`<div className="swiper-button-prev" />`)
-* pagination (Boolean|Element|Function) Pagination is active by default, use `false` to hide. (`<div className="swiper-pagination" />`)
-* scrollBar (Boolean|Element|Function) Scrollbar is hidden by default, use `false` to show.
-* onInitSwiper (Function) Function invoked every time swiper instance is initialized, invoked will `swiper` as first argument.
-* All event handlers are supported as well (i.e. onTouchMove, etc.)
 
-*note*: The following props can be functions: nextButton, prevButton, pagination, and scrollBar. If functions, they
+- swiperOptions (Object) Options passed to swiper instance.
+- wrapperClassName (String) Classname for underlying wrapper element.
+- navigation (Boolean) Display navigation elements (`true`)
+- nextButton (Element|Function) Navigation next element (`<div className="swiper-button-next" />`)
+- prevButton (Element|Function) Navigation previous element (`<div className="swiper-button-prev" />`)
+- pagination (Boolean|Element|Function) Pagination is active by default, use `false` to hide. (`<div className="swiper-pagination" />`)
+- paginationClickable (Boolean) Enable clickable pagination.
+- scrollBar (Boolean|Element|Function) Scrollbar is hidden by default, use `false` to show.
+- onInitSwiper (Function) Function invoked every time swiper instance is initialized, invoked will `swiper` as first argument.
+- All event handlers are supported as well (i.e. onTouchMove, etc.)
+
+_note_: The following props can be functions: nextButton, prevButton, pagination, and scrollBar. If functions, they
 will be invoked with the underlying `Swiper` instance as the one and only argument. They must return a renderable element.
+
 #### Methods
-* swiper() Returns underlying swiper instance.
+
+- swiper() Returns underlying swiper instance.
 
 ## Slide
+
 #### Props
-* onActive (Function) Invoked with swiper instance when `Slide` is active. Not invoked on initialization.
+
+- onActive (Function) Invoked with swiper instance when `Slide` is active. Not invoked on initialization.
 
 [idangerous-swiper]: http://idangero.us/swiper
 [travis-image]: https://travis-ci.org/nickpisacane/react-dynamic-swiper.svg?branch=master
