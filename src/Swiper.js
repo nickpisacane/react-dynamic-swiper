@@ -221,6 +221,7 @@ export default class Swiper extends Component {
         'prevButton',
         'nextButton',
         'pagination',
+        'paginationClickable',
         'scrollBar',
         'onInitSwiper'
       ])
