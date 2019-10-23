@@ -83,6 +83,7 @@ class MySwiper extends Component {
 #### Props
 
 - swiperOptions (Object) Options passed to swiper instance.
+- containerClassName (String) Classname for underlying container element.
 - wrapperClassName (String) Classname for underlying wrapper element.
 - navigation (Boolean) Display navigation elements (`true`)
 - nextButton (Element|Function) Navigation next element (`<div className="swiper-button-next" />`)
